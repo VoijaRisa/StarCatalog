@@ -1,0 +1,54 @@
+html, body {
+height: 100%;
+width: 100%;
+}
+
+/*-- Controls navbar color, padding, and font size --*/
+.navbar {
+background-color: #C51100;
+padding: 1% 0;
+font-size: 1.2em;
+opacity: 0.8;
+}
+
+/*-- Controls navbar logo and padding --*/
+.navbar-brand {
+min-height: 55px;
+padding: 0 15px 5px;
+}
+
+/*-- Controls navbar links --*/
+.navbar-default .navbar-nav li a {
+color: #D5D5D5;
+}
+
+#home {
+background-color: b8cacc;
+display: table;
+min-height: 1000px;
+position: relative;
+width: 100%;
+background-size: cover;
+}
+
+.landing-text {
+display: table-cell;
+text-align: center;
+vertical-align: middle;
+}
+
+.padding {
+padding: 100px 0;
+}
+
+.padding img {
+width: 100%;
+}
+
+#fixed {
+background-color: 33adbc;
+height: 60%;
+position: relative;
+width: 100%;
+
+}

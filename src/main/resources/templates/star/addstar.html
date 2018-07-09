@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <title>Add a star</title>
+</head>
+<body>
+
+<form method="post" style="max-wdith:600px;" th:object="${star}">
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Add Star" />
+</form>
+
+</body>
+</html>

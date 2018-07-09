@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+
+<body class="container">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<div th:each="star : ${stars}">
+
+<br th:text="${star.name}" />
+
+<table class="table">
+    <tr>
+        <td>Altitude</td>
+        <td>Day &amp; Time</td>
+        <td>Object Id</td>
+    </tr>
+
+    <tr th:each="observation : ${observations}">
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.daytime}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.objectId}"></td>
+    </tr>
+
+    <tr>
+        <td>Average</td>
+        <td>StDev</td>
+    </tr>
+
+    <tr >
+        <td th:text="${star.average}"></td>
+        <td th:text="${star.stDev}"></td>
+    </tr>
+</table>
+
+</div>
+
+</body>
+</html>
