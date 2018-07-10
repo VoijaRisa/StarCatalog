@@ -9,24 +9,28 @@
 
 <div th:each="star : ${stars}">
 
-<br th:text="${star.name}" />
+<b><br th:text="${star.name}" /></b>
 
 <table class="table">
     <tr>
-        <td>Altitude</td>
-        <td>Day &amp; Time</td>
-        <td>Object Id</td>
+        <td><b>Altitude</b></td>
+        <td><b>Year</b></td>
+        <td><b>Month</b></td>
+        <td><b>Day</b></td>
+        <td><b>Location</b></td>
     </tr>
 
     <tr th:each="observation : ${observations}">
         <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude}"></td>
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.daytime}"></td>
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.objectId}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.year}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.month}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.dayOfMonth}"></td>
+        <td th:each="location : ${locations}" th:switch="${observation.locationId}" th:case="${location.locationId}" th:text="${location.location}"></td>
     </tr>
 
     <tr>
-        <td>Average</td>
-        <td>StDev</td>
+        <td><b>Average</b></td>
+        <td><b>StDev</b></td>
     </tr>
 
     <tr >

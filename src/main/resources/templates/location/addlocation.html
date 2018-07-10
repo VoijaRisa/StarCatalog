@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <title>Add a star</title>
+</head>
+<body>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" style="max-wdith:600px;" th:object="${location}">
+    <div class="form-group">
+        <label th:for="location">Location</label>
+        <input class="form-control" th:field="*{location}" />
+    </div>
+
+    <div class="form-group">
+        <label th:for="latitude">Latitude</label>
+        <input class="form-control" th:field="*{latitude}" />
+    </div>
+
+    <div class="form-group">
+        <label th:for="longitude">Longitude</label>
+        <input class="form-control" th:field="*{longitude}" />
+    </div>
+
+    <input type="submit" value="Add Location" />
+</form>
+
+</body>
+</html>

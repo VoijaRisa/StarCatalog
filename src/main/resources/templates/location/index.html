@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+
+<body class="container">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+    <table class="table">
+        <tr>
+            <td><b>Location</b></td>
+            <td><b>Latitude</b></td>
+            <td><b>Longitude</b></td>
+        </tr>
+
+        <tr th:each="location : ${locations}">
+            <td th:text="${location.location}"></td>
+            <td th:text="${location.latitude}"></td>
+            <td th:text="${location.longitude}"></td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

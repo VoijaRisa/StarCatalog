@@ -27,6 +27,8 @@ public class Star {
         name = aName;
     }
 
+    // Getters & Setters
+
     public int getStarId() {
         return starId;
     }

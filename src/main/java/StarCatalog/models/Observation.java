@@ -1,7 +1,7 @@
 package StarCatalog.models;
 
-
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 public class Observation {
 
@@ -13,9 +13,23 @@ public class Observation {
     @NotNull
     private Double altitude;
 
-    // Date and Time
+    // Azimuth
+    private Double azimuth = 180.0;
+
+    // Date
     @NotNull
-    private String daytime;
+    private int year;
+
+    @NotNull
+    private int month;
+
+    @NotNull
+    private int dayOfMonth;
+
+    private LocalDate date;
+
+    // Location
+    private int locationId;
 
     // Foreign key of Star
     @NotNull
@@ -27,10 +41,13 @@ public class Observation {
         nextId++;
     }
 
-    public Observation(Double aAltitude, String aDaytime, Integer aObjectId) {
+    public Observation(Double aAltitude, int aYear, int aMonth, int aDayOfMonth, int aLocationId, Integer aObjectId) {
         this();
         this.altitude = aAltitude;
-        this.daytime = aDaytime;
+        this.year = aYear;
+        this.month = aMonth;
+        this.dayOfMonth = aDayOfMonth;
+        this.locationId = aLocationId;
         this.objectId = aObjectId;
     }
 
@@ -51,16 +68,44 @@ public class Observation {
         this.altitude = altitude;
     }
 
-    public String getDaytime() {
-        return daytime;
-    }
-
-    public void setDaytime(String daytime) {
-        this.daytime = daytime;
-    }
-
     public Integer getObjectId() {
         return objectId;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public void setLocalDate(int year, int month, int dayOfMonth) {
+        date = LocalDate.of(year, month, dayOfMonth);
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public void setObjectId(Integer objectId) {

@@ -25,6 +25,7 @@ public class StarController {
 
         model.addAttribute("stars", StarData.getAll());
         model.addAttribute("observations", ObservationData.getAll());
+        model.addAttribute("locations", LocationData.getAll());
 
         return "star/index";
     }
@@ -49,6 +50,7 @@ public class StarController {
     public String displayAddObservationForm(Model model) {
         model.addAttribute(new Observation());
         model.addAttribute("stars", StarData.getAll());
+        model.addAttribute("locations", LocationData.getAll());
 
         return "star/addobservation";
     }
@@ -86,7 +88,7 @@ public class StarController {
 
         for (Observation observation : observations) {
             Double xMinX = observation.getAltitude() - average;
-            xMinX = xMinX* xMinX;
+            xMinX = xMinX * xMinX;
             stSum = stSum + xMinX;
         }
 
