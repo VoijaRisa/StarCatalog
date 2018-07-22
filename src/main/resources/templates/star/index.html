@@ -15,31 +15,37 @@
     <tr>
         <td><b>Altitude</b></td>
         <td><b>Azimuth</b></td>
-        <td><b>RA</b></td>
-        <td><b>Dec</b></td>
+        <td colspan="2"><b>RA</b></td>
+        <td colspan="2"><b>Dec</b></td>
         <td><b>ST</b></td>
         <td><b>Location</b></td>
         <td><b>Latitude</b></td>
     </tr>
 
     <tr th:each="observation : ${observations}">
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude}"></td> <!-- Alt -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.azimuth}"></td> <!-- Az -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.rightAscension}"></td> <!-- RA -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.declination}"></td> <!-- Dec -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.siderealTime}"></td> <!-- ST -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude} + 'º'"></td> <!-- Alt -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.azimuth} + 'º'"></td> <!-- Az -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.rightAscension}" colspan="2"></td> <!-- RA -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.declination} + 'º'" colspan="2"></td> <!-- Dec -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}"><span th:text="${observation.siderealTimeH} + 'h'"></span><span th:text="${observation.siderealTimeM} + 'm'"></span></td> <!-- ST-Hour -->
         <td th:each="location : ${locations}" th:switch="${observation.locationId}" th:case="${location.locationId}" th:text="${location.location}"></td> <!-- Location - Some sort of error on this line -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.latitude}"></td> <!-- Lat -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.latitude} + 'º'"></td> <!-- Lat -->
     </tr>
 
     <tr>
-        <td><b>Average</b></td>
-        <td><b>StDev</b></td>
+        <td colspan="2">&nbsp;</td>
+        <td><b>RA Average</b></td>
+        <td><b>RA StDev</b></td>
+        <td><b>Dec Average</b></td>
+        <td><b>Dec StDev</b></td>
     </tr>
 
-    <tr >
-        <td th:text="${star.average}"></td>
-        <td th:text="${star.stDev}"></td>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+        <td th:text="${star.avgRA} + 'º'"></td>
+        <td th:text="${star.stDevRA} + 'º'"></td>
+        <td th:text="${star.avgDec} + 'º'"></td>
+        <td th:text="${star.stDevDec} + 'º'"></td>
     </tr>
 </table>
 

@@ -1,6 +1,7 @@
 package StarCatalog.models;
 
 import javax.validation.constraints.NotNull;
+import java.text.DecimalFormat;
 
 public class Observation {
 
@@ -18,7 +19,12 @@ public class Observation {
 
     // ST
     @NotNull
-    private Double siderealTime;
+    private int siderealTimeH;
+
+    @NotNull
+    private int siderealTimeM;
+
+    private Double siderealTimeDeg;
 
     // Lat
     private Double latitude;
@@ -37,7 +43,7 @@ public class Observation {
     @NotNull
     private Integer objectId;
 
-    // Constructors
+    // Constructor
     public Observation() {
         observationId = nextId;
         nextId = nextId + 1;
@@ -62,11 +68,26 @@ public class Observation {
 
         double preHA = (sinAlt - (sinLat * sinDec))/(cosLat * cosDec);
 
+        if (preHA > 1) {
+            preHA = 1;
+        }
+
         double HA = Math.acos(preHA);
 
-        double hourAngle = Math.acos((Math.sin(altitude*Math.PI/180) - Math.sin(latitude*Math.PI/180)*Math.sin(declination*Math.PI/180))/(Math.cos(latitude*Math.PI/180)*Math.cos(declination*Math.PI/180))) * 180 / Math.PI;
+        double hourAngle = (Math.sin(altitude*Math.PI/180) - Math.sin(latitude*Math.PI/180)*Math.sin(declination*Math.PI/180))/(Math.cos(latitude*Math.PI/180)*Math.cos(declination*Math.PI/180)) * 180 / Math.PI;
 
-        rightAscension = siderealTime - hourAngle;
+        // Corrects for rounding errors pushing acos > 1 which will be common near meridian
+        if (hourAngle > 1) {
+            hourAngle= 1;
+        }
+
+        hourAngle = Math.acos(hourAngle);
+
+        rightAscension = siderealTimeDeg - hourAngle;
+    }
+
+    public void setSiderealTimeDeg() {
+        siderealTimeDeg = ((double)siderealTimeH + ((double)siderealTimeM/60))/24*360;
     }
 
     // Getters & Setters
@@ -95,11 +116,27 @@ public class Observation {
     }
 
     public Double getSiderealTime() {
-        return siderealTime;
+        return siderealTimeDeg;
     }
 
     public void setSiderealTime(Double siderealTime) {
-        this.siderealTime = siderealTime;
+        this.siderealTimeDeg = siderealTime;
+    }
+
+    public int getSiderealTimeH() {
+        return siderealTimeH;
+    }
+
+    public void setSiderealTimeH(int siderealTimeH) {
+        this.siderealTimeH = siderealTimeH;
+    }
+
+    public int getSiderealTimeM() {
+        return siderealTimeM;
+    }
+
+    public void setSiderealTimeM(int siderealTimeM) {
+        this.siderealTimeM = siderealTimeM;
     }
 
     public double getLatitude() {
