@@ -1,34 +1,36 @@
 package StarCatalog.models;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 public class Observation {
 
     // Primary Key
     private int observationId;
-    private static int nextId = 1;
+    private static int nextId = 0;
 
     // Altitude
     @NotNull
     private Double altitude;
 
     // Azimuth
-    private Double azimuth = 180.0;
-
-    // Date
     @NotNull
-    private int year;
+    private Double azimuth;
 
+    // ST
     @NotNull
-    private int month;
+    private Double siderealTime;
 
+    // Lat
+    private Double latitude;
+
+    // RA
+    private Double rightAscension;
+
+    // Dec
+    private Double declination;
+
+     // Foreign key of Location
     @NotNull
-    private int dayOfMonth;
-
-    private LocalDate date;
-
-    // Location
     private int locationId;
 
     // Foreign key of Star
@@ -38,17 +40,33 @@ public class Observation {
     // Constructors
     public Observation() {
         observationId = nextId;
-        nextId++;
+        nextId = nextId + 1;
     }
 
-    public Observation(Double aAltitude, int aYear, int aMonth, int aDayOfMonth, int aLocationId, Integer aObjectId) {
-        this();
-        this.altitude = aAltitude;
-        this.year = aYear;
-        this.month = aMonth;
-        this.dayOfMonth = aDayOfMonth;
-        this.locationId = aLocationId;
-        this.objectId = aObjectId;
+    // Calculators
+    public void setLatitude() {
+        latitude = LocationData.getById(locationId).getLatitude();
+    }
+
+    public void setDec() {
+        declination = Math.asin((Math.sin(latitude*Math.PI/180)*Math.sin(altitude*Math.PI/180) + Math.cos(latitude*Math.PI/180)*Math.cos(altitude*Math.PI/180)*Math.cos(azimuth*Math.PI/180))) * 180 / Math.PI;
+    }
+
+    public void setRA() {
+        double sinAlt = Math.sin(altitude*Math.PI/180);
+        double sinLat = Math.sin(latitude*Math.PI/180);
+        double sinDec = Math.sin(declination*Math.PI/180);
+
+        double cosLat = Math.cos(latitude*Math.PI/180);
+        double cosDec = Math.cos(declination*Math.PI/180);
+
+        double preHA = (sinAlt - (sinLat * sinDec))/(cosLat * cosDec);
+
+        double HA = Math.acos(preHA);
+
+        double hourAngle = Math.acos((Math.sin(altitude*Math.PI/180) - Math.sin(latitude*Math.PI/180)*Math.sin(declination*Math.PI/180))/(Math.cos(latitude*Math.PI/180)*Math.cos(declination*Math.PI/180))) * 180 / Math.PI;
+
+        rightAscension = siderealTime - hourAngle;
     }
 
     // Getters & Setters
@@ -68,36 +86,48 @@ public class Observation {
         this.altitude = altitude;
     }
 
+    public Double getAzimuth() {
+        return azimuth;
+    }
+
+    public void setAzimuth(Double azimuth) {
+        this.azimuth = azimuth;
+    }
+
+    public Double getSiderealTime() {
+        return siderealTime;
+    }
+
+    public void setSiderealTime(Double siderealTime) {
+        this.siderealTime = siderealTime;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getRightAscension() {
+        return rightAscension;
+    }
+
+    public void setRightAscension(Double rightAscension) {
+        this.rightAscension = rightAscension;
+    }
+
+    public Double getDeclination() {
+        return declination;
+    }
+
+    public void setDeclination(Double declination) {
+        this.declination = declination;
+    }
+
     public Integer getObjectId() {
         return objectId;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getDayOfMonth() {
-        return dayOfMonth;
-    }
-
-    public void setDayOfMonth(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
-    }
-
-    public void setLocalDate(int year, int month, int dayOfMonth) {
-        date = LocalDate.of(year, month, dayOfMonth);
     }
 
     public int getLocationId() {

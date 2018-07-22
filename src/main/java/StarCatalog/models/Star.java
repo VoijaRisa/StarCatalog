@@ -17,6 +17,14 @@ public class Star {
 
     private Double stDev = 0.0;
 
+    private Double avgRA = 0.0;
+
+    private Double stDevRA = 0.0;
+
+    private Double avgDec = 0.0;
+
+    private Double stDevDec = 0.0;
+
     // Constructors
     public Star() {
         starId = nextId;
@@ -59,5 +67,37 @@ public class Star {
 
     public void setStDev(Double stDev) {
         this.stDev = stDev;
+    }
+
+    public Double getAvgRA() {
+        return avgRA;
+    }
+
+    public void setAvgRA(Double avgRA) {
+        this.avgRA = avgRA;
+    }
+
+    public Double getStDevRA() {
+        return stDevRA;
+    }
+
+    public void setStDevRA(Double stDevRA) {
+        this.stDevRA = stDevRA;
+    }
+
+    public Double getAvgDec() {
+        return avgDec;
+    }
+
+    public void setAvgDec(Double avgDec) {
+        this.avgDec = avgDec;
+    }
+
+    public Double getStDevDec() {
+        return stDevDec;
+    }
+
+    public void setStDevDec(Double stDevDec) {
+        this.stDevDec = stDevDec;
     }
 }

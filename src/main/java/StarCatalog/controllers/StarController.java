@@ -22,10 +22,12 @@ public class StarController {
 
         ArrayList<Star> stars = StarData.getAll();
         ArrayList<Observation> observations = ObservationData.getAll();
+        ArrayList<Location> locations = LocationData.getAll();
 
-        model.addAttribute("stars", StarData.getAll());
-        model.addAttribute("observations", ObservationData.getAll());
-        model.addAttribute("locations", LocationData.getAll());
+        model.addAttribute("stars", stars);
+        model.addAttribute("observations", observations);
+        model.addAttribute("locations", locations);
+        model.addAttribute("title", "Uranometria 2.0");
 
         return "star/index";
     }
@@ -35,6 +37,7 @@ public class StarController {
     public String displayAddStarForm(Model model) {
 
         model.addAttribute(new Star());
+        model.addAttribute("title", "Add Star");
 
         return "star/addstar";
     }
@@ -51,12 +54,17 @@ public class StarController {
         model.addAttribute(new Observation());
         model.addAttribute("stars", StarData.getAll());
         model.addAttribute("locations", LocationData.getAll());
+        model.addAttribute("title", "Add Observation");
 
         return "star/addobservation";
     }
 
     @RequestMapping(value = "addobservation", method = RequestMethod.POST)
     public String processAddObservationForm(@ModelAttribute @Valid Observation newObservation, Error errors, Model model) {
+        newObservation.setLatitude();
+        newObservation.setDec();
+        newObservation.setRA();
+
         ObservationData.add(newObservation);
 
         // Calculates updated average and assigns to the submitted star

@@ -21,6 +21,7 @@ public class LocationController {
         ArrayList<Location>  locations = LocationData.getAll();
 
         model.addAttribute("locations", LocationData.getAll());
+        model.addAttribute("title", "Locations");
 
         return "location/index";
     }
@@ -30,6 +31,7 @@ public class LocationController {
     public String displayAddLocation(Model model) {
 
         model.addAttribute(new Location());
+        model.addAttribute("title", "Add Location");
 
         return "location/addlocation";
     }

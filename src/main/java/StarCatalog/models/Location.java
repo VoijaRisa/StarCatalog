@@ -12,10 +12,10 @@ public class Location {
     @Size(min=3, max=25, message="Name out of bounds")
     private String location;
 
-    @NotNull
+    @NotNull(message = "Cannot be blank")
     private Double latitude;
 
-    @NotNull
+    @NotNull(message = "Cannot be blank")
     private Double longitude;
 
     // Constructors
@@ -24,8 +24,8 @@ public class Location {
         nextId++;
     }
 
-    public Location(String aLoction, Double aLatitude, Double aLongitude) {
-        location = aLoction;
+    public Location(String aLocation, Double aLatitude, Double aLongitude) {
+        location = aLocation;
         latitude = aLatitude;
         longitude = aLongitude;
     }

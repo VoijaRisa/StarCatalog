@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
+<head th:replace="fragments :: head">
     <title>Add a star</title>
 </head>
-<body>
+<body class="container">
 
 <nav th:replace="fragments :: navigation"></nav>
 
@@ -23,18 +23,13 @@
     </div>
 
     <div class="form-group">
-        <label th:for="year">Year</label>
-        <input class="form-control" th:field="*{year}" />
+        <label th:for="azimuth">Azimuth</label>
+        <input class="form-control" th:field="*{azimuth}" />
     </div>
 
     <div class="form-group">
-        <label th:for="month">Month</label>
-        <input class="form-control" th:field="*{month}" />
-    </div>
-
-    <div class="form-group">
-        <label th:for="dayOfMonth">Day</label>
-        <input class="form-control" th:field="*{dayOfMonth}" />
+        <label th:for="siderealTime">ST</label>
+        <input class="form-control" th:field="*{siderealTime}" />
     </div>
 
     <div class="form-group">

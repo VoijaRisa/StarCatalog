@@ -14,18 +14,22 @@
 <table class="table">
     <tr>
         <td><b>Altitude</b></td>
-        <td><b>Year</b></td>
-        <td><b>Month</b></td>
-        <td><b>Day</b></td>
+        <td><b>Azimuth</b></td>
+        <td><b>RA</b></td>
+        <td><b>Dec</b></td>
+        <td><b>ST</b></td>
         <td><b>Location</b></td>
+        <td><b>Latitude</b></td>
     </tr>
 
     <tr th:each="observation : ${observations}">
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude}"></td>
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.year}"></td>
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.month}"></td>
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.dayOfMonth}"></td>
-        <td th:each="location : ${locations}" th:switch="${observation.locationId}" th:case="${location.locationId}" th:text="${location.location}"></td>
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude}"></td> <!-- Alt -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.azimuth}"></td> <!-- Az -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.rightAscension}"></td> <!-- RA -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.declination}"></td> <!-- Dec -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.siderealTime}"></td> <!-- ST -->
+        <td th:each="location : ${locations}" th:switch="${observation.locationId}" th:case="${location.locationId}" th:text="${location.location}"></td> <!-- Location - Some sort of error on this line -->
+        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.latitude}"></td> <!-- Lat -->
     </tr>
 
     <tr>
