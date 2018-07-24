@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}"></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+
+<body class="container">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<div id="starChart"><!-- Plotly chart will be drawn inside this DIV --></div>
+<script th:inline="text">
+    var data = [
+  {
+    x: [ [[${xs}]] ],
+    y: [ [[${ys}]] ],
+    error_x: {
+        type: 'data',
+        array: [ [[${xError}]] ],
+        },
+    error_y: {
+        type: 'data',
+        array: [ [[${yError}]] ],
+        },
+    mode: 'markers',
+    type: 'scatter'
+  }
+];
+Plotly.newPlot('starChart', data);
+</script>
+</body>
+</html>

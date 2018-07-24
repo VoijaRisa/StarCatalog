@@ -96,9 +96,13 @@ public class StarController {
         Double RAstSum = 0.0;
 
         for (Observation observation : observations) {
-            Double xMinX = observation.getRightAscension() - RAaverage;
-            xMinX = xMinX * xMinX;
-            RAstSum = RAstSum + xMinX;
+            for (Star star : stars) {
+                if (star.getStarId() == newObservation.getObjectId()) {
+                    Double xMinX = observation.getRightAscension() - RAaverage;
+                    xMinX = xMinX * xMinX;
+                    RAstSum = RAstSum + xMinX;
+                }
+            }
         }
 
         RAstSum = RAstSum/counter;
@@ -152,5 +156,48 @@ public class StarController {
 
         // Redirects back to root
         return "redirect:";
+    }
+
+    // View Graph
+    @RequestMapping(value = "chart", method = RequestMethod.GET)
+    public String chart(Model model) {
+        model.addAttribute("title", "Star Chart");
+
+        ArrayList<Star> stars = StarData.getAll();
+
+        // get X values
+        String xs = "";
+        for (Star star : stars) {
+            double value = star.getAvgRA();
+            xs = xs + value + ", ";
+        }
+
+        // get X errors
+        String xError = "";
+        for (Star star : stars) {
+            double value = star.getStDevRA();
+            xError = xError + value + ", ";
+        }
+
+        // get Y values
+        String ys = "";
+        for (Star star : stars) {
+            double value = star.getAvgDec();
+            ys = ys + value + ", ";
+        }
+
+        // get Y errors
+        String yError = "";
+        for (Star star : stars) {
+            double value = star.getStDevDec();
+            yError = yError + value + ", ";
+        }
+
+        model.addAttribute("xs", xs);
+        model.addAttribute("xError", xError);
+        model.addAttribute("ys", ys );
+        model.addAttribute("yError", yError);
+
+        return "star/chart";
     }
 }
