@@ -68,89 +68,13 @@ public class StarController {
 
         ObservationData.add(newObservation);
 
-        // Calculates updated average for RA and assigns to the submitted star
         ArrayList<Star> stars = StarData.getAll();
-        ArrayList<Observation> observations = ObservationData.getAll();
 
-        Double sum = 0.0;
-        Integer counter = 0;
-        Double RAaverage = 0.0;
-
-        for (Observation observation : observations) {
-            Integer objectId = observation.getObjectId();
-            Integer newObjectId = newObservation.getObjectId();
-            if (objectId.equals(newObjectId)) {
-                sum += observation.getRightAscension();
-                counter += 1;
-                RAaverage = sum/counter;
-                }
-            }
-        for (Star star : stars) {
-            if (star.getStarId() == (newObservation.getObjectId())) {
-                star.setAvgRA(RAaverage);
-            }
-        }
-
-        // Calculates updated stDev for RA and assigns to the submitted star
-        Double RAstDev = 0.0;
-        Double RAstSum = 0.0;
-
-        for (Observation observation : observations) {
-            for (Star star : stars) {
-                if (star.getStarId() == newObservation.getObjectId()) {
-                    Double xMinX = observation.getRightAscension() - RAaverage;
-                    xMinX = xMinX * xMinX;
-                    RAstSum = RAstSum + xMinX;
-                }
-            }
-        }
-
-        RAstSum = RAstSum/counter;
-        RAstSum = Math.sqrt(RAstSum);
-
+        // Updates stats
         for (Star star : stars) {
             if (star.getStarId() == newObservation.getObjectId()) {
-                star.setStDevRA(RAstSum);
-            }
-        }
-
-        // Calculates updated average for Dec and assigns to the submitted star
-
-        Double decSum = 0.0;
-        Integer decCounter = 0;
-        Double decAverage = 0.0;
-
-        for (Observation observation : observations) {
-            Integer objectId = observation.getObjectId();
-            Integer newObjectId = newObservation.getObjectId();
-            if (objectId.equals(newObjectId)) {
-                decSum += observation.getDeclination();
-                decCounter += 1;
-                decAverage = decSum/decCounter;
-            }
-        }
-        for (Star star : stars) {
-            if (star.getStarId() == (newObservation.getObjectId())) {
-                star.setAvgDec(decAverage);
-            }
-        }
-
-        // Calculates updated stDev for RA and assigns to the submitted star
-        Double decStDev = 0.0;
-        Double decStSum = 0.0;
-
-        for (Observation observation : observations) {
-            Double xMinX = observation.getDeclination() - decAverage;
-            xMinX = xMinX * xMinX;
-            decStSum = decStSum + xMinX;
-        }
-
-        decStSum = decStSum/decCounter;
-        decStSum = Math.sqrt(decStSum);
-
-        for (Star star : stars) {
-            if (star.getStarId() == newObservation.getObjectId()) {
-                star.setStDevDec(decStSum);
+                star.updateStats();
+                break;
             }
         }
 
