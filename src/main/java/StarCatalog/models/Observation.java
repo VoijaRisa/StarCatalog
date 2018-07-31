@@ -1,9 +1,15 @@
 package StarCatalog.models;
 
+import StarCatalog.models.data.LocationDao;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.validation.constraints.NotNull;
 import java.text.DecimalFormat;
 
 public class Observation {
+
+    @Autowired
+    private LocationDao locationDao;
 
     // Primary Key
     private int observationId;
@@ -51,7 +57,7 @@ public class Observation {
 
     // Calculators
     public void setLatitude() {
-        latitude = LocationData.getById(locationId).getLatitude();
+        latitude = locationDao.findOne(locationId).getLatitude();
     }
 
     public void setDec() {

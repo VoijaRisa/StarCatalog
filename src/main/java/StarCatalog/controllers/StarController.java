@@ -1,6 +1,8 @@
 package StarCatalog.controllers;
 
 import StarCatalog.models.*;
+import StarCatalog.models.data.LocationDao;
+import StarCatalog.models.data.StarDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +18,19 @@ import java.util.ArrayList;
 @RequestMapping("star")
 public class StarController {
 
+    @Autowired
+    private StarDao starDao;
+
+    @Autowired
+    private LocationDao locationDao;
+
     // Index
     @RequestMapping("")
     public String index(Model model) {
 
-        ArrayList<Star> stars = StarData.getAll();
+        Iterable<Star> stars = starDao.findAll();
         ArrayList<Observation> observations = ObservationData.getAll();
-        ArrayList<Location> locations = LocationData.getAll();
+        Iterable<Location> locations = locationDao.findAll();
 
         model.addAttribute("stars", stars);
         model.addAttribute("observations", observations);
@@ -44,7 +52,7 @@ public class StarController {
 
     @RequestMapping(value = "addstar", method = RequestMethod.POST)
     public String processAddStarForm(@ModelAttribute @Valid Star newStar, Error errors, Model model) {
-        StarData.add(newStar);
+        starDao.save(newStar);
         return "redirect:";
     }
 
@@ -52,8 +60,8 @@ public class StarController {
     @RequestMapping(value = "addobservation", method = RequestMethod.GET)
     public String displayAddObservationForm(Model model) {
         model.addAttribute(new Observation());
-        model.addAttribute("stars", StarData.getAll());
-        model.addAttribute("locations", LocationData.getAll());
+        model.addAttribute("stars", starDao.findAll());
+        model.addAttribute("locations", locationDao.findAll());
         model.addAttribute("title", "Add Observation");
 
         return "star/addobservation";
@@ -68,7 +76,7 @@ public class StarController {
 
         ObservationData.add(newObservation);
 
-        ArrayList<Star> stars = StarData.getAll();
+        Iterable<Star> stars = starDao.findAll();
 
         // Updates stats
         for (Star star : stars) {
@@ -87,7 +95,7 @@ public class StarController {
     public String chart(Model model) {
         model.addAttribute("title", "Star Chart");
 
-        ArrayList<Star> stars = StarData.getAll();
+        Iterable<Star> stars = starDao.findAll();
 
         // get X values
         String xs = "";

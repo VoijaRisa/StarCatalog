@@ -1,26 +1,28 @@
 package StarCatalog.controllers;
 
 import StarCatalog.models.Location;
-import StarCatalog.models.LocationData;
+import StarCatalog.models.data.LocationDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("location")
 public class LocationController {
 
+    @Autowired
+    private LocationDao locationDao;
+
     // Index
     @RequestMapping("")
     public String index(Model model) {
-        ArrayList<Location>  locations = LocationData.getAll();
+        Iterable<Location>  locations = locationDao.findAll();
 
-        model.addAttribute("locations", LocationData.getAll());
+        model.addAttribute("locations", locations);
         model.addAttribute("title", "Locations");
 
         return "location/index";
@@ -38,7 +40,7 @@ public class LocationController {
 
     @RequestMapping(value = "addlocation", method = RequestMethod.POST)
     public String processAddLocation(@ModelAttribute @Valid Location newLocation, Error errors, Model model) {
-        LocationData.add(newLocation);
+        locationDao.save(newLocation);
         return "redirect:";
     }
 }

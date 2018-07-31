@@ -1,12 +1,17 @@
 package StarCatalog.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Location {
 
+    @Id
+    @GeneratedValue
     private int locationId;
-    private static int nextId = 1;
 
     @NotNull
     @Size(min=3, max=25, message="Name out of bounds")
@@ -19,10 +24,7 @@ public class Location {
     private Double longitude;
 
     // Constructors
-    public Location() {
-        locationId = nextId;
-        nextId++;
-    }
+    public Location() { }
 
     public Location(String aLocation, Double aLatitude, Double aLongitude) {
         location = aLocation;

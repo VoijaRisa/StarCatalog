@@ -1,14 +1,18 @@
 package StarCatalog.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 
-
+@Entity
 public class Star {
 
+    @Id
+    @GeneratedValue
     private int starId;
-    private static int nextId = 1;
 
     @NotNull
     @Size(min=3, max=25, message="Name out of bounds")
@@ -27,10 +31,7 @@ public class Star {
     private double stDevDec = 0.0;
 
     // Constructors
-    public Star() {
-        starId = nextId;
-        nextId++;
-    }
+    public Star() { }
 
     public Star(String aName) {
         name = aName;
@@ -124,10 +125,6 @@ public class Star {
 
     public int getStarId() {
         return starId;
-    }
-
-    public void setStarId(int starId) {
-        this.starId = starId;
     }
 
     public String getName() {
