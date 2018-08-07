@@ -2,6 +2,8 @@ package StarCatalog.models;
 
 import StarCatalog.models.Location;
 import StarCatalog.models.Star;
+import StarCatalog.models.data.LocationDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -53,13 +55,13 @@ public class Observation {
     public Observation() { }
 
     //Calculators
-//    public void setDec() {
+//    public void setDec(int locationId) {
 //        Double latitude = locationDao.findOne(locationId).getLatitude();
 //
 //        declination = Math.asin((Math.sin(latitude*Math.PI/180)*Math.sin(altitude*Math.PI/180) + Math.cos(latitude*Math.PI/180)*Math.cos(altitude*Math.PI/180)*Math.cos(azimuth*Math.PI/180))) * 180 / Math.PI;
 //    }
 //
-//    public void setRA() {
+//    public void setRA(int locationId) {
 //        Double latitude = locationDao.findOne(locationId).getLatitude();
 //
 //        double sinAlt = Math.sin(altitude*Math.PI/180);
@@ -88,7 +90,7 @@ public class Observation {
 //
 //        rightAscension = siderealTimeDeg - hourAngle;
 //    }
-
+//
     public void setSiderealTimeDeg() {
         siderealTimeDeg = ((double)siderealTimeH + ((double)siderealTimeM/60))/24*360;
     }

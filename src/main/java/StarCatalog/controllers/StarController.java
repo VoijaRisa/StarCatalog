@@ -73,19 +73,25 @@ public class StarController {
 
     @RequestMapping(value = "addobservation", method = RequestMethod.POST)
     public String processAddObservationForm(@ModelAttribute @Valid Observation newObservation, Error errors, @RequestParam int starId, @RequestParam int locationId, Model model) {
+        // Takes input Sidereal Time and converts to degrees for ease of math
         newObservation.setSiderealTimeDeg();
+
+        // Associates the Observation with the appropriate Star in DB
         Star newStarObservation = starDao.findOne(starId);
         newObservation.setStar(newStarObservation);
+
+        // Associates the Observation with the appropriate Location in DB
         Location newLocationObservation = locationDao.findOne(locationId);
         newObservation.setLocation(newLocationObservation);
 
-//        newObservation.setLatitude();
-//        newObservation.setDec();
-//        newObservation.setRA();
+        // Calculates RA & Dec and sets them to submitted observation
+//        newObservation.setDec(locationId);
+//        newObservation.setRA(locationId);
 
+        // Saves submitted observation to dB
         observationDao.save(newObservation);
 
-        Iterable<Star> stars = starDao.findAll();
+//        Iterable<Star> stars = starDao.findAll();
 
         // Updates stats
 //        for (Star star : stars) {

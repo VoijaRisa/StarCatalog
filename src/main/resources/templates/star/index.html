@@ -23,13 +23,13 @@
     </tr>
 
     <tr th:each="observation : ${observations}">
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.altitude} + 'º'"></td> <!-- Alt -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.azimuth} + 'º'"></td> <!-- Az -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.rightAscension}" colspan="2"></td> <!-- RA -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.declination} + 'º'" colspan="2"></td> <!-- Dec -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}"><span th:text="${observation.siderealTimeH} + 'h'"></span><span th:text="${observation.siderealTimeM} + 'm'"></span></td> <!-- ST-Hour -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}" th:text="${observation.altitude} + 'º'"></td> <!-- Alt -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}" th:text="${observation.azimuth} + 'º'"></td> <!-- Az -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}" th:text="${observation.rightAscension}" colspan="2"></td> <!-- RA -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}" th:text="${observation.declination} + 'º'" colspan="2"></td> <!-- Dec -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}"><span th:text="${observation.siderealTimeH} + 'h'"></span><span th:text="${observation.siderealTimeM} + 'm'"></span></td> <!-- ST-Hour -->
         <!-- <span th:each="location : ${locations}"><td th:switch="${observation.locationId}" th:case="${location.locationId}" th:text="${location.location}"></td></span> Location - Some sort of error on this line -->
-        <td th:switch="${observation.objectId}" th:case="${star.starId}" th:text="${observation.latitude} + 'º'"></td> <!-- Lat -->
+        <td th:switch="${observation.star.starId}" th:case="${star.starId}" th:text="${observation.location.latitude} + 'º'"></td> <!-- Lat -->
     </tr>
 
     <tr>
