@@ -2,6 +2,7 @@ package StarCatalog.controllers;
 
 import StarCatalog.models.*;
 import StarCatalog.models.data.LocationDao;
+import StarCatalog.models.data.ObservationDao;
 import StarCatalog.models.data.StarDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,15 @@ public class StarController {
     @Autowired
     private LocationDao locationDao;
 
+    @Autowired
+    private ObservationDao observationDao;
+
     // Index
     @RequestMapping("")
     public String index(Model model) {
 
         Iterable<Star> stars = starDao.findAll();
-        ArrayList<Observation> observations = ObservationData.getAll();
+        Iterable<Observation> observations = observationDao.findAll();
         Iterable<Location> locations = locationDao.findAll();
 
         model.addAttribute("stars", stars);
@@ -70,21 +74,21 @@ public class StarController {
     @RequestMapping(value = "addobservation", method = RequestMethod.POST)
     public String processAddObservationForm(@ModelAttribute @Valid Observation newObservation, Error errors, Model model) {
         newObservation.setSiderealTimeDeg();
-        newObservation.setLatitude();
-        newObservation.setDec();
-        newObservation.setRA();
+//        newObservation.setLatitude();
+//        newObservation.setDec();
+//        newObservation.setRA();
 
-        ObservationData.add(newObservation);
+        observationDao.save(newObservation);
 
         Iterable<Star> stars = starDao.findAll();
 
         // Updates stats
-        for (Star star : stars) {
-            if (star.getStarId() == newObservation.getObjectId()) {
-                star.updateStats();
-                break;
-            }
-        }
+//        for (Star star : stars) {
+//            if (star.getStarId() == newObservation.getObjectId()) {
+//                star.updateStats();
+//                break;
+//            }
+//        }
 
         // Redirects back to root
         return "redirect:";
