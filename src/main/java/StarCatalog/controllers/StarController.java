@@ -72,8 +72,13 @@ public class StarController {
     }
 
     @RequestMapping(value = "addobservation", method = RequestMethod.POST)
-    public String processAddObservationForm(@ModelAttribute @Valid Observation newObservation, Error errors, Model model) {
+    public String processAddObservationForm(@ModelAttribute @Valid Observation newObservation, Error errors, @RequestParam int starId, @RequestParam int locationId, Model model) {
         newObservation.setSiderealTimeDeg();
+        Star newStarObservation = starDao.findOne(starId);
+        newObservation.setStar(newStarObservation);
+        Location newLocationObservation = locationDao.findOne(locationId);
+        newObservation.setLocation(newLocationObservation);
+
 //        newObservation.setLatitude();
 //        newObservation.setDec();
 //        newObservation.setRA();
