@@ -1,21 +1,22 @@
 package StarCatalog.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Location {
 
+    // Setting up variables within model class
     @Id
     @GeneratedValue
     private int locationId;
 
     @NotNull
-    @Size(min=3, max=25, message="Name out of bounds")
-    private String location;
+    @Size(min=3, max=25)
+    private String locationName;
 
     @NotNull(message = "Cannot be blank")
     private Double latitude;
@@ -23,26 +24,33 @@ public class Location {
     @NotNull(message = "Cannot be blank")
     private Double longitude;
 
-    // Constructors
-    public Location() { }
+    @OneToMany
+    @JoinColumn(name = "location_id")
+    private List<Observation> observations = new ArrayList<>();
 
-    public Location(String aLocation, Double aLatitude, Double aLongitude) {
-        location = aLocation;
-        latitude = aLatitude;
-        longitude = aLongitude;
+    // Constructors
+    public Location(){}
+
+    public Location(String aName) {
+        this();
+        locationName = aName;
     }
 
-    // Getters & Setters
+    // Getters and setters for variables
     public int getLocationId() {
         return locationId;
     }
 
-    public String getLocation() {
-        return location;
+    public void setLocationId(int aLocationId) {
+        this.locationId = aLocationId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public Double getLatitude() {
@@ -59,5 +67,9 @@ public class Location {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public List<Observation> getObservations() {
+        return observations;
     }
 }

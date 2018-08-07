@@ -1,15 +1,17 @@
 package StarCatalog.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import StarCatalog.models.Observation;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Star {
 
+    // Setting up variables within model class
     @Id
     @GeneratedValue
     private int starId;
@@ -17,10 +19,6 @@ public class Star {
     @NotNull
     @Size(min=3, max=25, message="Name out of bounds")
     private String name;
-
-    private double average = 0.0;
-
-    private double stDev = 0.0;
 
     private double avgRA = 0.0;
 
@@ -30,99 +28,103 @@ public class Star {
 
     private double stDevDec = 0.0;
 
+    @OneToMany
+    @JoinColumn(name = "star_id")
+    private List<Observation> observations = new ArrayList<>();
+
     // Constructors
-    public Star() { }
+    public Star(){}
 
     public Star(String aName) {
+        this();
         name = aName;
     }
 
     // Calculators
-    public void setAvgRA() {
-        ArrayList<Observation> observations = ObservationData.getAll();
+//    public void setAvgRA() {
+//        Iterable<Observation> observations = observationDao.findAll();
+//
+//        double sum = 0.0;
+//        int counter = 0;
+//
+//        for (Observation observation : observations) {
+//            if (observation.getStarId() == starId) {
+//                sum = sum + observation.getRightAscension();
+//                counter += 1;
+//            }
+//        }
+//
+//        avgRA = sum/counter;
+//    }
+//
+//    public void setAvgDec() {
+//        Iterable<Observation> observations = observationDao.findAll();
+//
+//        double sum = 0.0;
+//        int counter = 0;
+//
+//        for (Observation observation : observations) {
+//            if (observation.getStarId() == starId) {
+//                sum = sum + observation.getDeclination();
+//                counter += 1;
+//            }
+//        }
+//
+//        avgDec = sum/counter;
+//    }
+//
+//    public void setRAStDev() {
+//        Iterable<Observation> observations = observationDao.findAll();
+//
+//        double sumSquared = 0.0;
+//        int counter = 0;
+//
+//        for (Observation observation : observations) {
+//            if (observation.getStarId() == starId) {
+//                sumSquared += (observation.getRightAscension() - avgRA)*(observation.getRightAscension() - avgRA);
+//                counter += 1;
+//            }
+//        }
+//
+//        if (counter - 1 == 0) {
+//            stDevRA = 0.0;
+//        }
+//        else {
+//            stDevRA = sumSquared/(counter - 1);
+//            stDevRA = Math.sqrt(stDevRA);
+//        }
+//    }
+//
+//    public void setDecStDev() {
+//        Iterable<Observation> observations = observationDao.findAll();
+//
+//        Double sumSquared = 0.0;
+//        Integer counter = 0;
+//
+//        for (Observation observation : observations) {
+//            if (observation.getStarId() == starId) {
+//                sumSquared += (observation.getDeclination() - avgDec)*(observation.getDeclination() - avgDec);
+//                counter += 1;
+//            }
+//        }
+//
+//        if (counter - 1 ==0) {
+//            stDevDec = 0.0;
+//        }
+//        else {
+//            stDevDec = sumSquared/(counter - 1);
+//            stDevDec = Math.sqrt(stDevDec);
+//        }
+//    }
+//
+//    public void updateStats() {
+//        setAvgRA();
+//        setAvgDec();
+//        setRAStDev();
+//        setDecStDev();
+//    }
 
-        double sum = 0.0;
-        int counter = 0;
-
-        for (Observation observation : observations) {
-            if (observation.getObjectId() == starId) {
-                sum = sum + observation.getRightAscension();
-                counter += 1;
-            }
-        }
-
-        avgRA = sum/counter;
-    }
-
-    public void setAvgDec() {
-        ArrayList<Observation> observations = ObservationData.getAll();
-
-        double sum = 0.0;
-        int counter = 0;
-
-        for (Observation observation : observations) {
-            if (observation.getObjectId() == starId) {
-                sum = sum + observation.getDeclination();
-                counter += 1;
-            }
-        }
-
-        avgDec = sum/counter;
-    }
-
-    public void setRAStDev() {
-        ArrayList<Observation> observations = ObservationData.getAll();
-
-        double sumSquared = 0.0;
-        int counter = 0;
-
-        for (Observation observation : observations) {
-            if (observation.getObjectId() == starId) {
-                sumSquared += (observation.getRightAscension() - avgRA)*(observation.getRightAscension() - avgRA);
-                counter += 1;
-            }
-        }
-
-        if (counter - 1 == 0) {
-            stDevRA = 0.0;
-        }
-        else {
-            stDevRA = sumSquared/(counter - 1);
-            stDevRA = Math.sqrt(stDevRA);
-        }
-    }
-
-    public void setDecStDev() {
-        ArrayList<Observation> observations = ObservationData.getAll();
-
-        Double sumSquared = 0.0;
-        Integer counter = 0;
-
-        for (Observation observation : observations) {
-            if (observation.getObjectId() == starId) {
-                sumSquared += (observation.getDeclination() - avgDec)*(observation.getDeclination() - avgDec);
-                counter += 1;
-            }
-        }
-
-        if (counter - 1 ==0) {
-            stDevDec = 0.0;
-        }
-        else {
-            stDevDec = sumSquared/(counter - 1);
-            stDevDec = Math.sqrt(stDevDec);
-        }
-    }
-
-    public void updateStats() {
-        setAvgRA();
-        setAvgDec();
-        setRAStDev();
-        setDecStDev();
-    }
-
-    // Getters & Setters
-
+    // Getters and setters for variables
     public int getStarId() {
         return starId;
     }
@@ -135,22 +137,6 @@ public class Star {
         this.name = name;
     }
 
-    public Double getAverage() {
-        return average;
-    }
-
-    public void setAverage(Double average) {
-        this.average = average;
-    }
-
-    public Double getStDev() {
-        return stDev;
-    }
-
-    public void setStDev(Double stDev) {
-        this.stDev = stDev;
-    }
-
     public Double getAvgRA() {
         return avgRA;
     }
@@ -159,23 +145,15 @@ public class Star {
         return stDevRA;
     }
 
-    public void setStDevRA(Double stDevRA) {
-        this.stDevRA = stDevRA;
-    }
-
     public Double getAvgDec() {
         return avgDec;
-    }
-
-    public void setAvgDec(Double avgDec) {
-        this.avgDec = avgDec;
     }
 
     public Double getStDevDec() {
         return stDevDec;
     }
 
-    public void setStDevDec(Double stDevDec) {
-        this.stDevDec = stDevDec;
+    public List<Observation> getObservations() {
+        return observations;
     }
 }
