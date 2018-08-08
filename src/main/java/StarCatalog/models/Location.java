@@ -25,7 +25,7 @@ public class Location {
     private Double longitude;
 
     @OneToMany
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "location_location_id")
     private List<Observation> observations = new ArrayList<>();
 
     // Constructors

@@ -29,7 +29,7 @@ public class Star {
     private double stDevDec = 0.0;
 
     @OneToMany
-    @JoinColumn(name = "star_id")
+    @JoinColumn(name = "star_star_id")
     private List<Observation> observations = new ArrayList<>();
 
     // Constructors
@@ -41,88 +41,80 @@ public class Star {
     }
 
     // Calculators
-//    public void setAvgRA() {
-//        Iterable<Observation> observations = observationDao.findAll();
-//
-//        double sum = 0.0;
-//        int counter = 0;
-//
-//        for (Observation observation : observations) {
-//            if (observation.getStarId() == starId) {
-//                sum = sum + observation.getRightAscension();
-//                counter += 1;
-//            }
-//        }
-//
-//        avgRA = sum/counter;
-//    }
-//
-//    public void setAvgDec() {
-//        Iterable<Observation> observations = observationDao.findAll();
-//
-//        double sum = 0.0;
-//        int counter = 0;
-//
-//        for (Observation observation : observations) {
-//            if (observation.getStarId() == starId) {
-//                sum = sum + observation.getDeclination();
-//                counter += 1;
-//            }
-//        }
-//
-//        avgDec = sum/counter;
-//    }
-//
-//    public void setRAStDev() {
-//        Iterable<Observation> observations = observationDao.findAll();
-//
-//        double sumSquared = 0.0;
-//        int counter = 0;
-//
-//        for (Observation observation : observations) {
-//            if (observation.getStarId() == starId) {
-//                sumSquared += (observation.getRightAscension() - avgRA)*(observation.getRightAscension() - avgRA);
-//                counter += 1;
-//            }
-//        }
-//
-//        if (counter - 1 == 0) {
-//            stDevRA = 0.0;
-//        }
-//        else {
-//            stDevRA = sumSquared/(counter - 1);
-//            stDevRA = Math.sqrt(stDevRA);
-//        }
-//    }
-//
-//    public void setDecStDev() {
-//        Iterable<Observation> observations = observationDao.findAll();
-//
-//        Double sumSquared = 0.0;
-//        Integer counter = 0;
-//
-//        for (Observation observation : observations) {
-//            if (observation.getStarId() == starId) {
-//                sumSquared += (observation.getDeclination() - avgDec)*(observation.getDeclination() - avgDec);
-//                counter += 1;
-//            }
-//        }
-//
-//        if (counter - 1 ==0) {
-//            stDevDec = 0.0;
-//        }
-//        else {
-//            stDevDec = sumSquared/(counter - 1);
-//            stDevDec = Math.sqrt(stDevDec);
-//        }
-//    }
-//
-//    public void updateStats() {
-//        setAvgRA();
-//        setAvgDec();
-//        setRAStDev();
-//        setDecStDev();
-//    }
+    public void setAvgRA() {
+        List<Observation> observations = getObservations();
+
+        double sum = 0.0;
+        int counter = 0;
+
+        for (Observation observation : observations) {
+            sum = sum + observation.getRightAscension();
+            counter += 1;
+        }
+
+        avgRA = sum/counter;
+    }
+
+    public void setAvgDec() {
+        List<Observation> observations = getObservations();
+
+        double sum = 0.0;
+        int counter = 0;
+
+        for (Observation observation : observations) {
+            sum = sum + observation.getDeclination();
+            counter += 1;
+        }
+
+        avgDec = sum/counter;
+    }
+
+    public void setRAStDev() {
+        List<Observation> observations = getObservations();
+
+        double sumSquared = 0.0;
+        int counter = 0;
+
+        for (Observation observation : observations) {
+            sumSquared += (observation.getRightAscension() - avgRA)*(observation.getRightAscension() - avgRA);
+            counter += 1;
+        }
+
+        if (counter - 1 == 0) {
+            stDevRA = 0.0;
+        }
+        else {
+            stDevRA = sumSquared/(counter - 1);
+            stDevRA = Math.sqrt(stDevRA);
+        }
+    }
+
+    public void setDecStDev() {
+        List<Observation> observations = getObservations();
+
+        Double sumSquared = 0.0;
+        Integer counter = 0;
+
+        for (Observation observation : observations) {
+            sumSquared += (observation.getDeclination() - avgDec)*(observation.getDeclination() - avgDec);
+            counter += 1;
+        }
+
+        if (counter - 1 ==0) {
+            stDevDec = 0.0;
+        }
+        else {
+            stDevDec = sumSquared/(counter - 1);
+            stDevDec = Math.sqrt(stDevDec);
+        }
+    }
+
+    public void updateStats() {
+        setAvgRA();
+        setAvgDec();
+        setRAStDev();
+        setDecStDev();
+    }
 
     // Getters and setters for variables
     public int getStarId() {

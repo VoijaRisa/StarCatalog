@@ -5,6 +5,7 @@ import StarCatalog.models.data.LocationDao;
 import StarCatalog.models.data.ObservationDao;
 import StarCatalog.models.data.StarDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -91,15 +92,17 @@ public class StarController {
         // Saves submitted observation to dB
         observationDao.save(newObservation);
 
-//        Iterable<Star> stars = starDao.findAll();
+        Iterable<Star> stars = starDao.findAll();
 
         // Updates stats
-//        for (Star star : stars) {
-//            if (star.getStarId() == newObservation.getObjectId()) {
-//                star.updateStats();
-//                break;
-//            }
-//        }
+        for (Star star : stars) {
+            if (star.getStarId() == newObservation.getStar().getStarId()) {
+                star.updateStats();
+
+                starDao.save(star);
+                break;
+            }
+        }
 
         // Redirects back to root
         return "redirect:";
