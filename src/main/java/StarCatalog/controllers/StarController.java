@@ -85,8 +85,8 @@ public class StarController {
         newObservation.setLocation(newLocationObservation);
 
         // Calculates RA & Dec and sets them to submitted observation
-//        newObservation.setDec(locationId);
-//        newObservation.setRA(locationId);
+        newObservation.setDec(locationId);
+        newObservation.setRA(locationId);
 
         // Saves submitted observation to dB
         observationDao.save(newObservation);

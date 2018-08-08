@@ -55,42 +55,42 @@ public class Observation {
     public Observation() { }
 
     //Calculators
-//    public void setDec(int locationId) {
-//        Double latitude = locationDao.findOne(locationId).getLatitude();
-//
-//        declination = Math.asin((Math.sin(latitude*Math.PI/180)*Math.sin(altitude*Math.PI/180) + Math.cos(latitude*Math.PI/180)*Math.cos(altitude*Math.PI/180)*Math.cos(azimuth*Math.PI/180))) * 180 / Math.PI;
-//    }
-//
-//    public void setRA(int locationId) {
-//        Double latitude = locationDao.findOne(locationId).getLatitude();
-//
-//        double sinAlt = Math.sin(altitude*Math.PI/180);
-//        double sinLat = Math.sin(latitude*Math.PI/180);
-//        double sinDec = Math.sin(declination*Math.PI/180);
-//
-//        double cosLat = Math.cos(latitude*Math.PI/180);
-//        double cosDec = Math.cos(declination*Math.PI/180);
-//
-//        double preHA = (sinAlt - (sinLat * sinDec))/(cosLat * cosDec);
-//
-//        if (preHA > 1) {
-//            preHA = 1;
-//        }
-//
-//        double HA = Math.acos(preHA);
-//
-//        double hourAngle = (Math.sin(altitude*Math.PI/180) - Math.sin(latitude*Math.PI/180)*Math.sin(declination*Math.PI/180))/(Math.cos(latitude*Math.PI/180)*Math.cos(declination*Math.PI/180)) * 180 / Math.PI;
-//
-//        // Corrects for rounding errors pushing acos > 1 which will be common near meridian
-//        if (hourAngle > 1) {
-//            hourAngle= 1;
-//        }
-//
-//        hourAngle = Math.acos(hourAngle);
-//
-//        rightAscension = siderealTimeDeg - hourAngle;
-//    }
-//
+    public void setDec(int locationId) {
+        Double latitude = getLocation().getLatitude();
+
+        declination = Math.asin((Math.sin(latitude*Math.PI/180)*Math.sin(altitude*Math.PI/180) + Math.cos(latitude*Math.PI/180)*Math.cos(altitude*Math.PI/180)*Math.cos(azimuth*Math.PI/180))) * 180 / Math.PI;
+    }
+
+    public void setRA(int locationId) {
+        Double latitude = getLocation().getLatitude();
+
+        double sinAlt = Math.sin(altitude*Math.PI/180);
+        double sinLat = Math.sin(latitude*Math.PI/180);
+        double sinDec = Math.sin(declination*Math.PI/180);
+
+        double cosLat = Math.cos(latitude*Math.PI/180);
+        double cosDec = Math.cos(declination*Math.PI/180);
+
+        double preHA = (sinAlt - (sinLat * sinDec))/(cosLat * cosDec);
+
+        if (preHA > 1) {
+            preHA = 1;
+        }
+
+        double HA = Math.acos(preHA);
+
+        double hourAngle = (Math.sin(altitude*Math.PI/180) - Math.sin(latitude*Math.PI/180)*Math.sin(declination*Math.PI/180))/(Math.cos(latitude*Math.PI/180)*Math.cos(declination*Math.PI/180)) * 180 / Math.PI;
+
+        // Corrects for rounding errors pushing acos > 1 which will be common near meridian
+        if (hourAngle > 1) {
+            hourAngle= 1;
+        }
+
+        hourAngle = Math.acos(hourAngle);
+
+        rightAscension = siderealTimeDeg - hourAngle;
+    }
+
     public void setSiderealTimeDeg() {
         siderealTimeDeg = ((double)siderealTimeH + ((double)siderealTimeM/60))/24*360;
     }
